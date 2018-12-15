@@ -35,7 +35,12 @@ class Player:
 
     def calculateTotalPropertyValue(self):
         # NEED TO DO IT
-        return 1
+        totalPropValue=0
+        for p in self.properties:
+            totalPropValue+=p.getPrice(self)
+
+
+        return totalPropValue
 
     def getProperty(self, prop):
         self.properties.append(prop)
@@ -57,6 +62,9 @@ class ColorProperty:
         self.propertyPrice = price
         self.mortgageMount = mortgageAmount
         self.rentTuple = rentTuple
+    def getPrice(self)
+        return self.propertyPrice
+
 
     
 class TaxProperty(Property):
