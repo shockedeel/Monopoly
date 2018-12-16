@@ -140,6 +140,36 @@ class TaxProperty(Property):
                 return player.payMoney(self.taxAmount)
         else:
             return player.payMoney(self.taxAmount)
+
+    class Deck:
+        def __init__(self, type):
+            self.type = type
+            self.deck = []
+            self.index = 0
+
+        def fillDeck(self):
+            if (self.type == 'CommunityChest'):
+                f = open('CommunityChest.txt')
+            if (self.type == 'Chance'):
+                f = open('Chance.txt')
+            for line in f:
+                self.deck.append(str(line)[:-1])
+
+        def printDeck(self):
+            for element in self.deck:
+                print(element)
+
+        def shuffleDeck(self):
+            shuffle(self.deck)
+
+        def drawCard(self):
+            if (self.index == len(self.deck)):
+                self.index = 0
+                self.shuffleDeck()
+            index = self.index
+            self.index += 1
+
+            return self.deck[index]
     
 
 class Monopoly():
