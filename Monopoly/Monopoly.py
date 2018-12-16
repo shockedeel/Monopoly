@@ -8,17 +8,17 @@ class Board:
             # Strip newline and create property info tuple
             line = line[:-1]
             propertyInfo = tuple(line.split('-'))
-            print(propertyInfo)
 
             # Create Property based on info in property tuple
             if propertyInfo[1] == "color":
                 rentInfo = tuple(map(int, propertyInfo[4].split(",")))
                 self.board.append(ColorProperty(propertyInfo[0],int(propertyInfo[2]),int(propertyInfo[2]) / 2, rentInfo))
 
+            if propertyInfo[1] == "go":
+                self.board.append(GoProperty(propertyInfo[0]))
 
-
-
-
+            if propertyInfo[1] == "tax":
+                self.board.append(TaxProperty(propertyInfo[0], str(propertyInfo[4]),bool(propertyInfo[2]),float(propertyInfo[3])))
 
     def __str__(self):
         return str(self.board)
@@ -74,6 +74,17 @@ class Property:
     def getName(self):
         return self.name
 
+    def __str__(self):
+        return self.getName()
+
+    def __repr__(self):
+        return "(" + self.__str__() + ")"
+
+
+class GoProperty(Property):
+    def __init__(self, name):
+        super().__init__(name)
+
 
 class ColorProperty(Property):
     def __init__(self, name, price, mortgageAmount, rentTuple):
@@ -84,6 +95,10 @@ class ColorProperty(Property):
         self.rentTuple = rentTuple
         self.houseCount = 0
         super().__init__(name)
+
+    def __str__(self):
+        string = self.name + " " + str(self.propertyPrice) + " " +  str(self.owner) + " " +  str(self.mortgageStatus) + " " + str(self.houseCount)
+        return string
 
     def getRentPrice(self):
         return self.rentTuple(self.houseCount)
@@ -110,6 +125,9 @@ class TaxProperty(Property):
         self.variableTax = variableTax
         self.variableRate = variableRate
         super().__init__(name)
+
+    def __str__(self):
+        return self.name + " " + str(self.taxAmount)
 
     def landAction(self, player):
         return self.__payTax(player)
@@ -142,6 +160,5 @@ game = Monopoly(playerInfo)
 print(game)
 
 prop = ColorProperty("hello",200,100,(2,4,6,8,9,10))
-
 board = Board()
-
+print(board)

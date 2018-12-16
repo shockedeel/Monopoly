@@ -19,22 +19,22 @@ Community Chest-community chest
 Tennnesse Avenue-color-180-orange-14,70,200,550,750
 New York Avenue-color-200-orange-16,80,220,600,800,1000
 Free Parking-parking
-Kentucky Avenue-color-220-red
+Kentucky Avenue-color-220-red-18,90,250,700,875,1050
 Chance-chance
-Indiana Avenue-color-220-red
-Illinois Avenue-color-240-red
+Indiana Avenue-color-220-red-18,90,250,700,875,1050
+Illinois Avenue-color-240-red-20,100,300,750,925
 B&O Railroad-rail-200
-Atlantic Avenue-color-260-yellow
-Ventnor Avenue-color-260-yellow
+Atlantic Avenue-color-260-yellow-22,110,330,800,975,1150
+Ventnor Avenue-color-260-yellow-22,110,330,800,975,1150
 Water Works-util-150
-Marvin Gardens-color-280-yellow
+Marvin Gardens-color-280-yellow-24,120,360,850,1025,1200
 Go To Jail-goJail
-Pacific Avenue-color-300-green
-North Carolina Avenue-color-300-green
+Pacific Avenue-color-300-green-26,130,390,900,1100,1275
+North Carolina Avenue-color-300-green-26,130,390,900,1100,1275
 Community Chest-community chest
-Pennsylvania Avenue-color-320-green
+Pennsylvania Avenue-color-320-green-28,150,450,1000,1200
 Short Line Railroad-rail-200
 Chance-chance
-Park Place-color-350-blue
+Park Place-color-350-blue-35,175,500,1100,1300,1500
 Luxury Tax-tax-False-0-75
-Boardwalk-color-400-blue
+Boardwalk-color-400-blue-50,200,600,1400,1700,2000
