@@ -1,39 +1,40 @@
-Go
-Mediterranean Avenue
-Community Chest
-Income Tax
-Reading Railroad
-Oriental Avenue
-Chance
-Vermont Avenue
-Connecticut Avenue
-Jail
-St. Charles Place
-Electric Company
-State Avenue
-Virginia Avenue
-Pennsylvania Railroad
-St. James Place
-Community Chest
-Tennnesse Avenue
-New York Avenue
-Free Parking
-Kentucky Avenue
-Chance
-Indiana Avenue
-Illinois Avenue
-B&O Railroad
-Atlantic Avenue
-Ventnor Avenue
-Water Works
-Marvin Gardens
-Go To Jail
-Pacific Avenue
-North Carolina Avenue
-Community Chest
-Pennsylvania Avenue
-Short Line Railroad
-Chance
-Park Place
-Luxury Tax
-Boardwalk
+Go-go
+Mediterranean Avenue-color-60-brown-2,10,30,90,160,250
+Community Chest-community chest
+Baltic Avenue-color-60-brown-4,20,60,180,320,450
+Income Tax-tax-True-.20-200
+Reading Railroad-rail-200
+Oriental Avenue-color-100-teal-6,30,90,270,400,550
+Chance-chance
+Vermont Avenue-color-100-teal-6,30,90,270,400,550
+Connecticut Avenue-color-120-teal-8,40,100,300,450,600
+Jail-jail
+St. Charles Place-color-140-purple-10,50,150,450,625,750
+Electric Company-util-150
+State Avenue-color-140-purple-10,50,150,450,625,750
+Virginia Avenue-color-160-purple-12,60,10,500,700,900
+Pennsylvania Railroad-rail-200
+St. James Place-color-180-orange-14,70,200,550,750
+Community Chest-community chest
+Tennnesse Avenue-color-180-orange-14,70,200,550,750
+New York Avenue-color-200-orange-16,80,220,600,800,1000
+Free Parking-parking
+Kentucky Avenue-color-220-red
+Chance-chance
+Indiana Avenue-color-220-red
+Illinois Avenue-color-240-red
+B&O Railroad-rail-200
+Atlantic Avenue-color-260-yellow
+Ventnor Avenue-color-260-yellow
+Water Works-util-150
+Marvin Gardens-color-280-yellow
+Go To Jail-goJail
+Pacific Avenue-color-300-green
+North Carolina Avenue-color-300-green
+Community Chest-community chest
+Pennsylvania Avenue-color-320-green
+Short Line Railroad-rail-200
+Chance-chance
+Park Place-color-350-blue
+Luxury Tax-tax-False-0-75
+Boardwalk-color-400-blue

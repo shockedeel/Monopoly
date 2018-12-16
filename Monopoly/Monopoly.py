@@ -5,28 +5,47 @@ class Board:
         # Create Board
         f = open('USBoard.txt')
         for line in f:
-            self.board.append(str(line)[:-1])
+            # Strip newline and create property info tuple
+            line = line[:-1]
+            propertyInfo = tuple(line.split('-'))
+            print(propertyInfo)
+
+            # Create Property based on info in property tuple
+            if propertyInfo[1] == "color":
+                rentInfo = tuple(map(int, propertyInfo[4].split(",")))
+                self.board.append(ColorProperty(propertyInfo[0],int(propertyInfo[2]),int(propertyInfo[2]) / 2, rentInfo))
+
+
+
+
+
 
     def __str__(self):
         return str(self.board)
 
 
 class Player:
-    def __init__(self, name, icon):
+    def __init__(self, name, icon = ''):
         self.playerName = name
         self.playerIcon = icon
         self.wallet = 1500
         self.properties = []
 
+    def __repr__(self):
+        return "(" + self.__str__() + ")"
+
     def __str__(self):
         return self.playerName + ", " + self.playerIcon + ", " + str(self.wallet) + ", " + str(self.properties)
+
+    def getPlayerName(self):
+        return self.playerName
 
     def getWallet(self):
         return self.wallet
 
     def receiveMoney(self, amount):
         self.wallet += amount
-        return
+        return True
 
     def payMoney(self, amount):
         if self.wallet - amount < 0:return False
@@ -34,12 +53,9 @@ class Player:
         return True
 
     def calculateTotalPropertyValue(self):
-        # NEED TO DO IT
-        totalPropValue=0
-        for p in self.properties:
-            totalPropValue+=p.getPrice(self)
-
-
+        totalPropValue = 0
+        for prop in self.properties:
+            totalPropValue += prop.getPrice(self)
         return totalPropValue
 
     def getProperty(self, prop):
@@ -49,7 +65,8 @@ class Player:
         if not prop in self.properties:
             return False
         return self.properties.remove(prop)
-        
+
+
 class Property:
     def __init__(self, name):
         self.name = name
@@ -57,16 +74,36 @@ class Property:
     def getName(self):
         return self.name
 
-class ColorProperty:
-    def __init__(self, price, mortgageAmount, rentTuple):
+
+class ColorProperty(Property):
+    def __init__(self, name, price, mortgageAmount, rentTuple):
         self.propertyPrice = price
-        self.mortgageMount = mortgageAmount
+        self.owner = None
+        self.mortgageAmount = mortgageAmount
+        self.mortgageStatus = False
         self.rentTuple = rentTuple
-    def getPrice(self)
+        self.houseCount = 0
+        super().__init__(name)
+
+    def getRentPrice(self):
+        return self.rentTuple(self.houseCount)
+
+    def getMortgageStatus(self):
+        return self.mortgageStatus
+
+    def getHouseCount(self):
+        return self.houseCount
+
+    def landAction(self, player):
+        if self.owner == None:
+            pass #TODO ask player if they want to buy
+        elif self.owner != player.getPlayerName():
+            return self.owner.receiveMoney(player.payMoney(self.getRentPrice()))
+
+    def getPrice(self):
         return self.propertyPrice
 
 
-    
 class TaxProperty(Property):
     def __init__(self, name, taxAmount, variableTax = False, variableRate = None):
         self.taxAmount = taxAmount
@@ -86,17 +123,25 @@ class TaxProperty(Property):
         else:
             return player.payMoney(self.taxAmount)
     
-    
-        
-        
-chris = Player("Chris", "boat")
-chris.receiveMoney(1200)
-print(chris)
-chris.payMoney(23)
-print(chris)
 
-incomeTax = TaxProperty("Income", 200, True, .25)
+class Monopoly():
+    def __init__(self, playerInfo, boardType = "US"):
+        self.players = []
+        for x in range(len(playerInfo)):
+            self.players.append(Player(playerInfo[x][0]))
 
-print(incomeTax.getName())
-incomeTax.landAction(chris)
-print(chris)
+        self.communityChest = 0
+
+    def __str__(self):
+        return str(self.players)
+
+
+
+playerInfo = [("Chris", "Car"), ("Kolbe", "Boat")]
+game = Monopoly(playerInfo)
+print(game)
+
+prop = ColorProperty("hello",200,100,(2,4,6,8,9,10))
+
+board = Board()
+
