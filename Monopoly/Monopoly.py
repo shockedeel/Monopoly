@@ -1,8 +1,12 @@
 class Board:
     def __init__(self):
-        self.board = []
+        self.board = self.createBoard()
 
-        # Create Board
+    def __str__(self):
+        return str(self.board)
+
+    def createBoard(self):
+        board = []
         f = open('USBoard.txt')
         for line in f:
             # Strip newline and create property info tuple
@@ -12,16 +16,38 @@ class Board:
             # Create Property based on info in property tuple
             if propertyInfo[1] == "color":
                 rentInfo = tuple(map(int, propertyInfo[4].split(",")))
-                self.board.append(ColorProperty(propertyInfo[0],int(propertyInfo[2]),int(propertyInfo[2]) / 2, rentInfo))
+                board.append(
+                    ColorProperty(propertyInfo[0], int(propertyInfo[2]), int(propertyInfo[2]) / 2, rentInfo))
 
             if propertyInfo[1] == "go":
-                self.board.append(GoProperty(propertyInfo[0]))
+                board.append(GoProperty(propertyInfo[0]))
 
             if propertyInfo[1] == "tax":
-                self.board.append(TaxProperty(propertyInfo[0], str(propertyInfo[4]),bool(propertyInfo[2]),float(propertyInfo[3])))
+                board.append(
+                    TaxProperty(propertyInfo[0], str(propertyInfo[4]), bool(propertyInfo[2]), float(propertyInfo[3])))
 
-    def __str__(self):
-        return str(self.board)
+            if propertyInfo[1] == "rail":
+                board.append(RailProperty(propertyInfo[0], int(propertyInfo[2]), int(propertyInfo[2]) / 2))
+
+            if propertyInfo[1] == "chance":
+                board.append(ChanceProperty(propertyInfo[0]))
+
+            if propertyInfo[1] == "community chest":
+                board.append(CommunityChestProperty(propertyInfo[0]))
+
+            if propertyInfo[1] == "jail":
+                board.append(JailProperty(propertyInfo[0]))
+
+            if propertyInfo[1] == "goJail":
+                board.append(GoJailProperty(propertyInfo[0]))
+
+            if propertyInfo[1] == "parking":
+                board.append(FreeParkingProperty(propertyInfo[0]))
+
+            if propertyInfo[1] == "util":
+                board.append(UtilityProperty(propertyInfo[0], propertyInfo[2]))
+
+        return board
 
 
 class Player:
@@ -86,37 +112,106 @@ class GoProperty(Property):
         super().__init__(name)
 
 
-class ColorProperty(Property):
-    def __init__(self, name, price, mortgageAmount, rentTuple):
+class ChanceProperty(Property):
+    def __init__(self, name):
+        super().__init__(name)
+
+    def landAction(self):
+        #TODO Fix
+        pass
+
+
+class CommunityChestProperty(Property):
+    def __init__(self, name):
+        super().__init__(name)
+
+    def landAction(self):
+        #TODO Fix
+        pass
+
+
+class JailProperty(Property):
+    def __init__(self, name):
+        super().__init__(name)
+
+    def landAction(self):
+        #TODO Fix
+        pass
+
+
+class GoJailProperty(Property):
+    def __init__(self, name):
+        super().__init__(name)
+
+    def landAction(self):
+        #TODO Fix
+        pass
+
+
+class FreeParkingProperty(Property):
+    def __init__(self, name):
+        super().__init__(name)
+        self.potValue = 0
+
+    def landAction(self):
+        #TODO Fix
+        pass
+
+class UtilityProperty(Property):
+    def __init__(self, name, price):
+        super().__init__(name)
+        self.price = price
+
+    def __str__(self):
+        return super().__str__() + " " + str(self.price)
+
+    def landAction(self):
+        #TODO Fix
+        pass
+
+
+class RailProperty(Property):
+    def __init__(self, name, price, mortgageAmount):
         self.propertyPrice = price
         self.owner = None
         self.mortgageAmount = mortgageAmount
         self.mortgageStatus = False
-        self.rentTuple = rentTuple
-        self.houseCount = 0
         super().__init__(name)
 
     def __str__(self):
-        string = self.name + " " + str(self.propertyPrice) + " " +  str(self.owner) + " " +  str(self.mortgageStatus) + " " + str(self.houseCount)
+        string = self.name + " " + str(self.propertyPrice) + " " +  str(self.owner) + " " +  str(self.mortgageStatus)
+        return string
+
+
+    def getMortgageStatus(self):
+        return self.mortgageStatus
+
+    def getPrice(self):
+        return self.propertyPrice
+
+
+class ColorProperty(RailProperty):
+    def __init__(self, name, price, mortgageAmount, rentTuple):
+        self.rentTuple = rentTuple
+        self.houseCount = 0
+        super().__init__(name, price, mortgageAmount)
+
+    def __str__(self):
+        string = self.name + " " + str(self.propertyPrice) + " " + str(self.owner) + " " + str(
+            self.mortgageStatus) + " " + str(self.houseCount)
         return string
 
     def getRentPrice(self):
         return self.rentTuple(self.houseCount)
-
-    def getMortgageStatus(self):
-        return self.mortgageStatus
 
     def getHouseCount(self):
         return self.houseCount
 
     def landAction(self, player):
         if self.owner == None:
-            pass #TODO ask player if they want to buy
+            pass  # TODO ask player if they want to buy
         elif self.owner != player.getPlayerName():
             return self.owner.receiveMoney(player.payMoney(self.getRentPrice()))
-
-    def getPrice(self):
-        return self.propertyPrice
 
 
 class TaxProperty(Property):
@@ -161,14 +256,16 @@ class Deck:
         self.index += 1
         return card
 
-class CommunityChest(Deck):
+
+class CommunityChestDeck(Deck):
     def __init__(self):
         super().__init__()
         f = open("CommunityChest.txt")
         for line in f:
             self.deck.append(str(line)[:-1])
 
-class Chance(Deck):
+
+class ChanceDeck(Deck):
     def __init__(self):
         super().__init__()
         f = open("Chance.txt")
@@ -176,16 +273,14 @@ class Chance(Deck):
             self.deck.append(str(line)[:-1])
 
 
-    
-
 class Monopoly():
     def __init__(self, playerInfo, boardType = "US"):
         self.players = []
         for x in range(len(playerInfo)):
             self.players.append(Player(playerInfo[x][0]))
 
-        self.communityChest = CommunityChest()
-        self.chance = Chance()
+        self.communityChest = CommunityChestDeck()
+        self.chance = ChanceDeck()
 
     def __str__(self):
         return str(self.players)
@@ -193,8 +288,8 @@ class Monopoly():
 
 
 playerInfo = [("Chris", "Car"), ("Kolbe", "Boat")]
-game = Monopoly(playerInfo)
-print(game)
+#game = Monopoly(playerInfo)
+#print(game)
 
 prop = ColorProperty("hello",200,100,(2,4,6,8,9,10))
 board = Board()
