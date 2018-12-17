@@ -141,35 +141,41 @@ class TaxProperty(Property):
         else:
             return player.payMoney(self.taxAmount)
 
-    class Deck:
-        def __init__(self, type):
-            self.type = type
-            self.deck = []
+
+class Deck:
+    def __init__(self):
+        self.deck = []
+        self.index = 0
+
+    def __str__(self):
+        print(self.deck)
+
+    def shuffleDeck(self):
+        self.shuffle(self.deck)
+        self.index = 0
+
+    def drawCard(self):
+        if self.index == len(self.deck) - 1:
             self.index = 0
+        card = self.deck[self.index]
+        self.index += 1
+        return card
 
-        def fillDeck(self):
-            if (self.type == 'CommunityChest'):
-                f = open('CommunityChest.txt')
-            if (self.type == 'Chance'):
-                f = open('Chance.txt')
-            for line in f:
-                self.deck.append(str(line)[:-1])
+class CommunityChest(Deck):
+    def __init__(self):
+        super().__init__()
+        f = open("CommunityChest.txt")
+        for line in f:
+            self.deck.append(str(line)[:-1])
 
-        def printDeck(self):
-            for element in self.deck:
-                print(element)
+class Chance(Deck):
+    def __init__(self):
+        super().__init__()
+        f = open("Chance.txt")
+        for line in f:
+            self.deck.append(str(line)[:-1])
 
-        def shuffleDeck(self):
-            shuffle(self.deck)
 
-        def drawCard(self):
-            if (self.index == len(self.deck)):
-                self.index = 0
-                self.shuffleDeck()
-            index = self.index
-            self.index += 1
-
-            return self.deck[index]
     
 
 class Monopoly():
@@ -178,7 +184,8 @@ class Monopoly():
         for x in range(len(playerInfo)):
             self.players.append(Player(playerInfo[x][0]))
 
-        self.communityChest = 0
+        self.communityChest = CommunityChest()
+        self.chance = Chance()
 
     def __str__(self):
         return str(self.players)
