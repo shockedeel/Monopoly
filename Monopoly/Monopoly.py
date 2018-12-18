@@ -1,9 +1,20 @@
+import random
+
 class Board:
     def __init__(self):
         self.board = self.createBoard()
 
+    def __iter__(self):
+        return iter(self.board)
+
+    def __getitem__(self, i):
+        return self.board[i]
+
     def __str__(self):
         return str(self.board)
+
+    def __len__(self):
+        return len(self.board)
 
     def createBoard(self):
         board = []
@@ -49,11 +60,15 @@ class Board:
 
         return board
 
+    def getPropertyName(self, index):
+        return self.board[index].getName()
+
 
 class Player:
     def __init__(self, name, icon = ''):
         self.playerName = name
         self.playerIcon = icon
+        self.playerLocation = 0
         self.wallet = 1500
         self.properties = []
 
@@ -92,6 +107,12 @@ class Player:
             return False
         return self.properties.remove(prop)
 
+    def movePlayer(self, roll, max):
+        self.playerLocation += roll
+        if self.playerLocation > max:
+            self.playerLocation = self.playerLocation - max
+
+
 
 class Property:
     def __init__(self, name):
@@ -117,7 +138,7 @@ class ChanceProperty(Property):
         super().__init__(name)
 
     def landAction(self):
-        #TODO Fix
+
         pass
 
 
@@ -272,25 +293,49 @@ class ChanceDeck(Deck):
         for line in f:
             self.deck.append(str(line)[:-1])
 
+class Dice():
+    def __init__(self):
+        self.doublesCount = 0
+
+    def rollDice(self):
+        dieOne = random.randint(1, 6)
+        dieTwo = random.randint(1, 6)
+        if dieOne == dieTwo:
+            self.doublesCount += 1
+
+        return dieOne, dieTwo
+
+    def doublesCount(self):
+        return self.doublesCount
+
 
 class Monopoly():
     def __init__(self, playerInfo, boardType = "US"):
         self.players = []
         for x in range(len(playerInfo)):
-            self.players.append(Player(playerInfo[x][0]))
+            self.players.append(Player(playerInfo[x][0], playerInfo[x][1]))
 
+        self.board = Board()
         self.communityChest = CommunityChestDeck()
         self.chance = ChanceDeck()
 
     def __str__(self):
-        return str(self.players)
+        string = ""
+        for player in self.players:
+            string += "(" + str(player) + ", " + str(self.board.getPropertyName(player.playerLocation)) + ") "
+        return string
 
+    def playerTurn(self, player):
+        dice = Dice()
+        move = sum(dice.rollDice())
+        print(player.getPlayerName() + " rolled a " + str(move))
+        player.movePlayer(move, len(self.board))
+        #self.board[player.playerLocation].landAction(player)
 
 
 playerInfo = [("Chris", "Car"), ("Kolbe", "Boat")]
-#game = Monopoly(playerInfo)
-#print(game)
+game = Monopoly(playerInfo)
+game.playerTurn(game.players[0])
+print(game)
 
-prop = ColorProperty("hello",200,100,(2,4,6,8,9,10))
-board = Board()
-print(board)
+
