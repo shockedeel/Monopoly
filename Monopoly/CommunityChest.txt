@@ -1,17 +1,17 @@
-Advance to Go (Collect $200)*
-Bank error in your favor—Collect $200*
-Doctor's fee—Pay $50*
-From sale of stock you get $50*
-Get Out of Jail Free*
-Go to Jail–Go directly to jail–Do not pass Go–Do not collect $200*
-Grand Opera Night—Collect $50 from every player for opening night seats*
-Holiday Fund matures—Receive $100*
-Income tax refund–Collect $20*
-It is your birthday—Collect $10*
-Life insurance matures–Collect $100*
-Pay hospital fees of $100*
-Pay school fees of $150*
-Receive $25 consultancy fee*
-You are assessed for street repairs–$40 per house–$115 per hotel*
-You have won second prize in a beauty contest–Collect $10*
-You inherit $100*
+Advance to Go (Collect $200)*moveTo*0
+Bank error in your favor—Collect $200*make*200
+Doctor's fee—Pay $50*50*False
+From sale of stock you get $50*make*50
+Get Out of Jail Free*getOut
+Go to Jail–Go directly to jail–Do not pass Go–Do not collect $200*moveTo*10
+Grand Opera Night—Collect $50 from every player for opening night seats*collect*50
+Holiday Fund matures—Receive $100*make*100
+Income tax refund–Collect $20*make*20
+It is your birthday—Collect $10*make*10
+Life insurance matures–Collect $100*make*100
+Pay hospital fees of $100*pay*100*False
+Pay school fees of $150*pay*150*False
+Receive $25 consultancy fee*make*25
+You are assessed for street repairs–$40 per house–$115 per hotel*house*40*115
+You have won second prize in a beauty contest–Collect $10*make*10
+You inherit $100*make*100
